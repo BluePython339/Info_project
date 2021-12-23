@@ -40,37 +40,17 @@ def scrape(URL):
             url = 'http://' + domain + url
         if validators.url(url):
             url_list.append(url)
+    text = "".join(text_list)
 
     # In the end there is text_results with all text on one page and url_list with referenced URL's.
     # [0] is the list of text, [1] the url list
-    return [text_list, url_list]
+    return text, url_list
 
-def spider(starting_URL):
-    spider_list = [starting_URL]
-    print(spider_list[0])
-    archieve = []
-    while len(spider_list) > 0:
-        scrape_results = scrape(spider_list[0])
-        scraped_text = scrape_results[0]
-        print(scraped_text)
-
-        # Kan hem misschien hier in de evaluator stoppen
-        # Als de site niet Nederlands is doet hij verder niets met de scraped URL's om evt. ruis te voorkomen
-        if IS_DUTCH?(scraped_text) == True:
-            # Adds the scraped URL's to the list
-            spider_list.extend(scrape_results[1])
-            # Removes the duplicates from the list
-            spider_list = list(dict.fromkeys(spider_list))
-            archieve.append(spider_list[0])
-            spider_list.pop(0)
-        else:
-            # Removes the first item on the list, so it will scrape the next in line in the next iteration
-            spider_list.pop(0)
 
 URL = "https://suriname.nu/"
 #URL = "https://nos.nl"
 
-test_spider = spider(URL)
+
 
 #results = scrape(URL)
 #for lines in results[0]:
